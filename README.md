@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# Practica Journal App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Conceptos practicados: Estructura y diseño de nuestra aplicación de Calendario, Uso de componentes de terceros, Modals
+Configuración de Redux, CRUD local, Preparación de pantallas para futuras secciones, Uso de MomentJS, Manejo de fechas.
+-Curso de Fernando Herrera Hooks y MERN
 
 ## Available Scripts
 
