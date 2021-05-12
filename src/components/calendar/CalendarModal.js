@@ -57,7 +57,7 @@ export const CalendarModal = () => {
     const closeModal = () => {
         //console.log('cerrando modal');
 
-        //ejecutamos la accion que viene del uiReducer
+        //ejecutamos la accion que viene del uiReducer y la enviamos al store redux
         dispatch( uiCloseModal() );
     }
 
