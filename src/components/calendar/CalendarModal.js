@@ -5,7 +5,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNew, eventClearActiveEvent } from '../../actions/events';
+import { eventAddNew, eventClearActiveEvent, eventUpdated } from '../../actions/events';
 
 
 const customStyles = {
@@ -118,16 +118,21 @@ export const CalendarModal = () => {
 
        //realizar grabacion en bd
        //console.log(formValues);
-       dispatch( eventAddNew({ 
-         ...formValues,
-
-         //datos temporario de ejemplo
-         id: new Date().getTime(),
-         user: {
-           _id: '123',
-           name: 'Luis'
-         }
-       }))
+       if ( activeEvent ) {
+         dispatch( eventUpdated( formValues ) );
+       } else {
+        dispatch( eventAddNew({ 
+          ...formValues,
+ 
+          //datos temporario de ejemplo
+          id: new Date().getTime(),
+          user: {
+            _id: '123',
+            name: 'Luis'
+          }
+        }));
+       }
+       
 
        setTitleValid(true);
        closeModal();
