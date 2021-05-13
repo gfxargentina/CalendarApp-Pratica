@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNew } from '../../actions/events';
-
+import { eventAddNew, eventClearActiveEvent } from '../../actions/events';
 
 
 const customStyles = {
@@ -26,10 +25,20 @@ Modal.setAppElement('#root');
 const now = moment().minutes(0).seconds(0).add(1, 'hours');
 const nowPlus1 = now.clone().add(1, 'hours');
 
+const initEvent = {
+      title: '',
+      notes: '',
+      start: now.toDate(),
+      end: nowPlus1.toDate()
+}
+
 export const CalendarModal = () => {
   
-    //para usar algo del store de redux
+    //para usar modalOpen del state de redux ui
     const { modalOpen } = useSelector(state => state.ui)
+
+    //desestructuracion para usar activeEvent del state de redux calendar
+    const { activeEvent } = useSelector( state => state.calendar );
 
     //para ejecutar algo del store de redux
     const dispatch = useDispatch();
@@ -38,14 +47,17 @@ export const CalendarModal = () => {
     const [ dateEnd, setDateEnd ] = useState( nowPlus1.toDate() );
     const [ titleValid, setTitleValid ] = useState(true);
 
-    const [ formValues, setFormValues] = useState({
-      title: 'Evento 1',
-      notes: '',
-      start: now.toDate(),
-      end: nowPlus1.toDate()
-    })
+    const [ formValues, setFormValues] = useState( initEvent )
 
     const { notes, title, start, end } = formValues;
+
+    useEffect(() => {
+      //console.log(activeEvent);
+      if ( activeEvent ) {
+        setFormValues( activeEvent );
+      }
+      
+    }, [activeEvent, setFormValues])
 
     const handleInputChange = ({ target }) => {
       setFormValues( {
@@ -60,6 +72,11 @@ export const CalendarModal = () => {
 
         //ejecutamos la accion que viene del uiReducer y la enviamos al store redux
         dispatch( uiCloseModal() );
+
+        //limpia el evento activo 
+        dispatch( eventClearActiveEvent() );
+        //reestablecer el formulario 
+        setFormValues( initEvent );
     }
 
     const handleStartDateChange = (e) => {
