@@ -5,6 +5,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
+import { eventAddNew } from '../../actions/events';
 
 
 
@@ -98,7 +99,18 @@ export const CalendarModal = () => {
          return setTitleValid(false);
        }
 
-       //TODO: realizar grabacion en bd
+       //realizar grabacion en bd
+       //console.log(formValues);
+       dispatch( eventAddNew({ 
+         ...formValues,
+
+         //datos temporario de ejemplo
+         id: new Date().getTime(),
+         user: {
+           _id: '123',
+           name: 'Luis'
+         }
+       }))
 
        setTitleValid(true);
        closeModal();
