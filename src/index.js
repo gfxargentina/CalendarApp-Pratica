@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import { CalendarApp } from './CalendarApp';
 import './styles.css'
 
+//para ver las variables de entorno
+console.log(process.env);
+
+
 ReactDOM.render(<CalendarApp />,
   document.getElementById('root')
 );
