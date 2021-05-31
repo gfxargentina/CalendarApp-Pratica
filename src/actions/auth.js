@@ -55,7 +55,7 @@ export const startChecking = () => {
     return async (dispatch) => {
         const resp = await fetchConToken( 'auth/renew');
         const body = await resp.json();
-       console.log(body);
+       //console.log(body);
 
        //si el body.ok = true , grabo el token en el localStorage junto con el dia y la hora
        if ( body.ok ) {
@@ -66,8 +66,7 @@ export const startChecking = () => {
                 uid: body.uid,
                 name: body.name
            }))
-       } else {
-           Swal.fire('Error', body.msg, 'error');
+       } else {           
            dispatch( checkingFinish() );
 
        }
