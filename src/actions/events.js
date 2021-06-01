@@ -79,6 +79,34 @@ const eventUpdated = ( event ) => ({
     payload: event
 });
 
+//borrar un evento
+export const eventStartDelete = () => {
+    return async( dispatch, getState ) => {
+
+        const { id } = getState().calendar.activeEvent;
+        
+        try {
+            //console.log(event)
+            const resp = await fetchConToken(`events/${ id }`, {}, 'DELETE');
+            const body = await resp.json();
+
+            if ( body.ok ) {
+                dispatch( eventDeleted( id ) );
+                Swal.fire('', 'El evento fue borrado correctamente', 'success');
+
+            } else {
+                Swal.fire('Error', body.msg, 'error');
+            }
+
+
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
+}
+
+
 export const eventDeleted = () => ({
     type: types.eventDeleted
 })
@@ -108,4 +136,9 @@ export const eventStartLoading = () => {
 const eventLoaded = (events) => ({
     type: types.eventLoaded,
     payload: events
+})
+
+//limpiar el calendario al salir 
+export const eventLogout = () => ({
+    type: types.eventLogout
 })
