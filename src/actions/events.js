@@ -1,3 +1,4 @@
+import { eventsDate } from "../helpers/eventsDate";
 import { fetchConToken } from "../helpers/fetch";
 import { types } from "../types/types";
 
@@ -64,7 +65,8 @@ export const eventStartLoading = () => {
             const body = await resp.json();
             //console.log(body);
 
-            const events = body.eventos;
+            const events = eventsDate( body.eventos );
+            //console.log(events)
 
             dispatch ( eventLoaded( events) );
 
