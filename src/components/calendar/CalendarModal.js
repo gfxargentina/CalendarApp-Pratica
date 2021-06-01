@@ -5,7 +5,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventClearActiveEvent, eventStartAddNew, eventUpdated } from '../../actions/events';
+import { eventClearActiveEvent, eventStartAddNew, eventStartUpdate } from '../../actions/events';
 
 
 const customStyles = {
@@ -121,7 +121,7 @@ export const CalendarModal = () => {
        //realizar grabacion en bd
        //console.log(formValues);
        if ( activeEvent ) {
-         dispatch( eventUpdated( formValues ) );
+         dispatch( eventStartUpdate( formValues ) );
        } else {
           dispatch( eventStartAddNew(formValues) );
           
